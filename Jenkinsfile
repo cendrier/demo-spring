@@ -4,7 +4,7 @@ pipeline {
     }
     environment {
       ORG               = 'jenkinsx'
-      APP_NAME          = 'demo_APP_NAME'
+      APP_NAME          = 'demo'
       GIT_CREDS         = credentials('jenkins-x-git')
       CHARTMUSEUM_CREDS = credentials('jenkins-x-chartmuseum')
       GIT_USERNAME      = "$GIT_CREDS_USR"
@@ -50,7 +50,7 @@ pipeline {
             sh "echo \$(jx-release-version) > VERSION"
             sh "mvn versions:set -DnewVersion=\$(cat VERSION)"
           }
-          dir ('./charts/demo_APP_NAME') {
+          dir ('./charts/$APP_NAME') {
             container('maven') {
               sh "make tag"
             }
@@ -68,7 +68,7 @@ pipeline {
           branch 'master'
         }
         steps {
-          dir ('./charts/demo_APP_NAME') {
+          dir ('./charts/$APP_NAME') {
             container('maven') {
               sh 'jx step changelog --version \$(cat ../../VERSION)'
 
