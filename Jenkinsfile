@@ -52,7 +52,7 @@ pipeline {
             sh "echo \$(jx-release-version) > VERSION"
             sh "mvn versions:set -DnewVersion=\$(cat VERSION)"
           }
-          dir ('./charts/$APP_NAME') {
+          dir ("./charts/$APP_NAME") {
             container('maven') {
               sh "make tag"
             }
@@ -70,7 +70,7 @@ pipeline {
           branch 'master'
         }
         steps {
-          dir ('./charts/$APP_NAME') {
+          dir ("./charts/$APP_NAME") {
             container('maven') {
               sh 'jx step changelog --version \$(cat ../../VERSION)'
 
