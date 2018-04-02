@@ -11,11 +11,6 @@ pipeline {
       GIT_API_TOKEN     = "$GIT_CREDS_PSW"
     }
     stages {
-      stage('Prepare environment') {
-        steps {
-          sh "echo nameserver 10.96.0.10 >> /etc/resolv.conf"
-        }
-      }
       stage('CI Build and push snapshot') {
         when {
           branch 'PR-*'
